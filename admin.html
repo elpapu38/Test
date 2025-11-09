@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Admin | Tienda Estática</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
+    <h1 class="text-xl font-semibold">Panel de Administración</h1>
+    <nav>
+      <a href="index.html" class="bg-blue-500 px-3 py-2 rounded hover:bg-blue-400 transition">Volver al Catálogo</a>
+    </nav>
+  </header>
+
+  <!-- Panel -->
+  <main class="p-6">
+    <h2 class="text-2xl font-semibold mb-4">Gestión de Productos</h2>
+    <table class="w-full bg-white shadow rounded-lg">
+      <thead>
+        <tr class="bg-gray-100 border-b">
+          <th class="py-2 px-4 text-left">ID</th>
+          <th class="py-2 px-4 text-left">Nombre</th>
+          <th class="py-2 px-4 text-left">Precio</th>
+          <th class="py-2 px-4 text-left">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-b hover:bg-gray-50">
+          <td class="py-2 px-4">1</td>
+          <td class="py-2 px-4">Producto 1</td>
+          <td class="py-2 px-4">$1500</td>
+          <td class="py-2 px-4">
+            <button class="bg-yellow-400 text-white px-2 py-1 rounded">Editar</button>
+            <button class="bg-red-500 text-white px-2 py-1 rounded">Eliminar</button>
+          </td>
+        </tr>
+        <tr class="border-b hover:bg-gray-50">
+          <td class="py-2 px-4">2</td>
+          <td class="py-2 px-4">Producto 2</td>
+          <td class="py-2 px-4">$2200</td>
+          <td class="py-2 px-4">
+            <button class="bg-yellow-400 text-white px-2 py-1 rounded">Editar</button>
+            <button class="bg-red-500 text-white px-2 py-1 rounded">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-center py-3">
+    © 2025 Tienda Estática — <a href="index.html" class="underline">Volver al Catálogo</a>
+  </footer>
+
+</body>
+</html>
