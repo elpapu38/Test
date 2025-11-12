@@ -1,382 +1,301 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Mar en Coche – Catálogo Digital</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'cream-light': '#FFF8F0', // Fondo principal
-                        'olive': '#6E8B3D', // Verde Oliva - Acento
-                        'ink': '#1E2749', // Azul Tinta - Texto principal
-                        'terracotta': '#E35336', // Terracota - Acento secundario
-                        'gray-bg': '#F9FAFB', // Fondo general más claro (usado en admin)
-                    },
-                    fontFamily: {
-                        'serif': ['Playfair Display', 'serif'],
-                        'sans': ['Inter', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        'artesanal': '0 4px 6px -1px rgba(110, 139, 61, 0.1), 0 2px 4px -2px rgba(110, 139, 61, 0.06)',
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .animate-slideDown { animation: slideDown 0.3s ease-out; }
-        
-        /* Estilo para la notificación Toast */
-        .toast-show {
-            animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(100%); } }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Mar en Coche – Catálogo Digital</title>
 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'cream-light': '#FFF8F0',
+            'olive': '#6E8B3D',
+            'ink': '#1E2749',
+            'terracotta': '#E35336',
+            'gray-bg': '#F9FAFB',
+          },
+          fontFamily: {
+            'serif': ['Playfair Display', 'serif'],
+            'sans': ['Inter', 'sans-serif'],
+          },
+          boxShadow: {
+            'artesanal': '0 4px 6px -1px rgba(110,139,61,0.1), 0 2px 4px -2px rgba(110,139,61,0.06)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(100%); } }
+    .toast-show { animation: fadeIn 0.5s, fadeOut 0.5s 2.5s; }
+  </style>
 </head>
+
 <body class="bg-cream-light font-sans text-ink">
 
-    <header class="sticky top-0 z-50 bg-cream-light/95 backdrop-blur-sm shadow-md">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <a href="#inicio" class="text-3xl font-serif text-ink font-bold tracking-tight">La Mar en Coche</a>
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 bg-cream-light/95 backdrop-blur-sm shadow-md">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <a href="#inicio" class="text-3xl font-serif font-bold tracking-tight">La Mar en Coche</a>
 
-            <div class="hidden md:flex space-x-8 text-lg">
-                <a href="#inicio" class="text-ink hover:text-olive transition duration-300">Inicio</a>
-                <a href="#productos" class="text-ink hover:text-olive transition duration-300">Productos</a>
-                <a href="#contacto" class="text-ink hover:text-olive transition duration-300">Contacto</a>
-                <a href="admin.html" class="text-terracotta hover:text-ink transition duration-300 font-semibold">Admin</a> 
-            </div>
+      <div class="hidden md:flex space-x-8 text-lg">
+        <a href="#inicio" class="hover:text-olive transition">Inicio</a>
+        <a href="#productos" class="hover:text-olive transition">Productos</a>
+        <a href="#contacto" class="hover:text-olive transition">Contacto</a>
+        <a href="admin.html" class="text-terracotta hover:text-ink font-semibold transition">Admin</a>
+      </div>
 
-            <div class="flex items-center space-x-4">
-                <div class="relative cursor-pointer p-2" onclick="toggleCartModal()">
-                    <i class="fas fa-shopping-basket text-xl text-ink hover:text-terracotta"></i>
-                    <span id="cart-count" class="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-cream-light transform translate-x-1/2 -translate-y-1/2 bg-terracotta rounded-full">0</span>
-                </div>
-                <button class="md:hidden p-2" onclick="toggleMobileMenu()">
-                    <i id="mobile-menu-icon" class="fas fa-bars text-xl text-ink"></i>
-                </button>
-            </div>
-        </nav>
-        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 border-t border-olive/20 text-lg">
-            <a href="#inicio" class="block py-2 text-ink hover:text-olive">Inicio</a>
-            <a href="#productos" class="block py-2 text-ink hover:text-olive">Productos</a>
-            <a href="#contacto" class="block py-2 text-ink hover:text-olive">Contacto</a>
-            <a href="admin.html" class="block py-2 text-terracotta hover:text-ink font-semibold">Admin</a>
+      <div class="flex items-center space-x-4">
+        <div class="relative cursor-pointer p-2" onclick="toggleCartModal()">
+          <i class="fas fa-shopping-basket text-xl text-ink hover:text-terracotta"></i>
+          <span id="cart-count" class="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-cream-light bg-terracotta rounded-full">0</span>
         </div>
-    </header>
+        <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+          <i id="mobile-menu-icon" class="fas fa-bars text-xl text-ink"></i>
+        </button>
+      </div>
+    </nav>
 
-    <main>
-        <section id="inicio" class="relative overflow-hidden pt-12 pb-24 lg:pt-24 lg:pb-36 min-h-[60vh]">
-            <div class="absolute inset-0 opacity-70" style="background-color: #D7E692; background-image: radial-gradient(circle, #D7E692 1px, transparent 1px), radial-gradient(circle, #D7E692 1px, #FFF8F0 1px); background-size: 2px 2px; background-position: 0 0, 1px 1px;"> 
-                <div class="absolute inset-0 bg-gradient-to-t from-cream-light/80 to-transparent"></div>
-            </div>
-            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h1 class="font-serif text-5xl sm:text-7xl lg:text-8xl font-light text-ink leading-tight mb-4">
-                    Explorá la belleza de lo hecho a mano.
-                </h1>
-                <p class="font-sans text-xl sm:text-2xl text-ink/80 max-w-2xl mx-auto mb-8">
-                    Libros, objetos y arte gráfico con alma, para inspirar tu creatividad.
-                </p>
-                <a href="#productos" class="inline-block px-8 py-3 bg-olive text-cream-light text-lg font-semibold rounded-full shadow-lg hover:bg-olive/90 transition duration-300 transform hover:scale-105">
-                    Ver Catálogo <i class="fas fa-arrow-down ml-2"></i>
-                </a>
-            </div>
-        </section>
-
-        <section id="categorias" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-            <h2 class="text-3xl font-serif text-ink text-center mb-12">Nuestros Espacios</h2>
-            
-            <div class="flex justify-center flex-wrap gap-3 mb-10">
-                <button class="px-5 py-2 bg-olive text-cream-light rounded-full font-semibold shadow-md">Todo</button>
-                <button class="px-5 py-2 border border-olive text-olive rounded-full hover:bg-olive/10">Libros</button>
-                <button class="px-5 py-2 border border-olive text-olive rounded-full hover:bg-olive/10">Arte y Diseño</button>
-                <button class="px-5 py-2 border border-olive text-olive rounded-full hover:bg-olive/10">Útiles Gráficos</button>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="group relative overflow-hidden rounded-xl shadow-artesanal bg-white transition duration-500 hover:shadow-xl hover:scale-[1.02]">
-                    <div class="h-64 bg-gray-200 flex items-center justify-center p-4"><span class="text-ink/60 text-xl">Libros</span></div>
-                    <div class="p-6">
-                        <h3 class="text-2xl font-serif text-ink mb-2">Libros</h3>
-                        <p class="text-ink/70 font-sans text-sm">Ediciones de autor, poesía y narrativa que inspiran.</p>
-                        <a href="#productos" class="block mt-4 text-terracotta hover:text-olive font-medium transition duration-300">Explorar →</a>
-                    </div>
-                </div>
-                <div class="group relative overflow-hidden rounded-xl shadow-artesanal bg-white transition duration-500 hover:shadow-xl hover:scale-[1.02]">
-                    <div class="h-64 bg-gray-200 flex items-center justify-center p-4"><span class="text-ink/60 text-xl">Novela Gráfica</span></div>
-                    <div class="p-6">
-                        <h3 class="text-2xl font-serif text-ink mb-2">Novela Gráfica</h3>
-                        <p class="text-ink/70 font-sans text-sm">Historias ilustradas con una visión única y personal.</p>
-                        <a href="#productos" class="block mt-4 text-terracotta hover:text-olive font-medium transition duration-300">Explorar →</a>
-                    </div>
-                </div>
-                <div class="group relative overflow-hidden rounded-xl shadow-artesanal bg-white transition duration-500 hover:shadow-xl hover:scale-[1.02]">
-                    <div class="h-64 bg-gray-200 flex items-center justify-center p-4"><span class="text-ink/60 text-xl">Arte y Diseño</span></div>
-                    <div class="p-6">
-                        <h3 class="text-2xl font-serif text-ink mb-2">Arte y Diseño</h3>
-                        <p class="text-ink/70 font-sans text-sm">Láminas, prints y objetos de decoración con arte original.</p>
-                        <a href="#productos" class="block mt-4 text-terracotta hover:text-olive font-medium transition duration-300">Explorar →</a>
-                    </div>
-                </div>
-                <div class="group relative overflow-hidden rounded-xl shadow-artesanal bg-white transition duration-500 hover:shadow-xl hover:scale-[1.02]">
-                    <div class="h-64 bg-gray-200 flex items-center justify-center p-4"><span class="text-ink/60 text-xl">Útiles Gráficos</span></div>
-                    <div class="p-6">
-                        <h3 class="text-2xl font-serif text-ink mb-2">Útiles Gráficos</h3>
-                        <p class="text-ink/70 font-sans text-sm">Herramientas de calidad para dar vida a tus ideas creativas.</p>
-                        <a href="#productos" class="block mt-4 text-terracotta hover:text-olive font-medium transition duration-300">Explorar →</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="productos" class="bg-olive/5 max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-            <h2 class="text-3xl font-serif text-ink text-center mb-12">Selección Destacada</h2>
-            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="product-card bg-white p-6 rounded-xl shadow-artesanal flex flex-col transition duration-300 hover:shadow-xl" data-name="Libreta Acuarelas Pro" data-id="P001">
-                    <div class="h-56 bg-terracotta/10 flex items-center justify-center rounded-lg mb-4">
-                        <span class="text-terracotta/60"> [Imagen Producto] </span>
-                    </div>
-                    <h3 class="text-2xl font-serif text-ink mb-2">Libreta Acuarelas Pro</h3>
-                    <p class="text-ink/70 font-sans text-sm mb-4 flex-grow">Papel 300gr, 100% algodón. Ideal para técnicas húmedas y mixtas.</p>
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-auto">
-                        <button onclick="addToCart('Libreta Acuarelas Pro', 'P001')" class="mb-2 sm:mb-0 w-full sm:w-auto px-4 py-2 text-sm font-semibold bg-olive text-cream-light rounded-full hover:bg-olive/90 transition duration-300">
-                            <i class="fas fa-cart-plus mr-1"></i> Añadir a Cesta
-                        </button>
-                        <a id="wa-P001" href="https://wa.me/5492920256833?text=Hola,%20me%20interesa%20el%20producto%20Libreta%20Acuarelas%20Pro" target="_blank" class="w-full sm:w-auto px-4 py-2 text-sm font-semibold text-olive border border-olive rounded-full hover:bg-olive hover:text-white transition duration-300 text-center">
-                            Consultar WA
-                        </a>
-                    </div>
-                </div>
-                <div class="product-card bg-white p-6 rounded-xl shadow-artesanal flex flex-col transition duration-300 hover:shadow-xl" data-name="Kit de Tintas Chinas" data-id="P002">
-                    <div class="h-56 bg-ink/10 flex items-center justify-center rounded-lg mb-4">
-                        <span class="text-ink/60"> [Imagen Producto] </span>
-                    </div>
-                    <h3 class="text-2xl font-serif text-ink mb-2">Kit de Tintas Chinas</h3>
-                    <p class="text-ink/70 font-sans text-sm mb-4 flex-grow">Set de 6 colores vibrantes para caligrafía e ilustración tradicional.</p>
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-auto">
-                        <button onclick="addToCart('Kit de Tintas Chinas', 'P002')" class="mb-2 sm:mb-0 w-full sm:w-auto px-4 py-2 text-sm font-semibold bg-olive text-cream-light rounded-full hover:bg-olive/90 transition duration-300">
-                            <i class="fas fa-cart-plus mr-1"></i> Añadir a Cesta
-                        </button>
-                        <a id="wa-P002" href="https://wa.me/5492920256833?text=Hola,%20me%20interesa%20el%20producto%20Kit%20de%20Tintas%20Chinas" target="_blank" class="w-full sm:w-auto px-4 py-2 text-sm font-semibold text-olive border border-olive rounded-full hover:bg-olive hover:text-white transition duration-300 text-center">
-                            Consultar WA
-                        </a>
-                    </div>
-                </div>
-                <div class="product-card bg-white p-6 rounded-xl shadow-artesanal flex flex-col transition duration-300 hover:shadow-xl" data-name="Novela Gráfica 'El Viaje'" data-id="P003">
-                    <div class="h-56 bg-olive/10 flex items-center justify-center rounded-lg mb-4">
-                        <span class="text-olive/60"> [Imagen Producto] </span>
-                    </div>
-                    <h3 class="text-2xl font-serif text-ink mb-2">Novela Gráfica "El Viaje"</h3>
-                    <p class="text-ink/70 font-sans text-sm mb-4 flex-grow">Edición de lujo, tapa dura. Una aventura introspectiva bellamente ilustrada.</p>
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-auto">
-                        <button onclick="addToCart('Novela Gráfica El Viaje', 'P003')" class="mb-2 sm:mb-0 w-full sm:w-auto px-4 py-2 text-sm font-semibold bg-olive text-cream-light rounded-full hover:bg-olive/90 transition duration-300">
-                            <i class="fas fa-cart-plus mr-1"></i> Añadir a Cesta
-                        </button>
-                        <a id="wa-P003" href="https://wa.me/5492920256833?text=Hola,%20me%20interesa%20el%20producto%20Novela%20Gráfica%20'El%20Viaje'" target="_blank" class="w-full sm:w-auto px-4 py-2 text-sm font-semibold text-olive border border-olive rounded-full hover:bg-olive hover:text-white transition duration-300 text-center">
-                            Consultar WA
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="testimonios" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-            <h2 class="text-3xl font-serif text-ink text-center mb-12">Lo que dicen nuestros clientes</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow-artesanal border-l-4 border-terracotta">
-                    <blockquote class="italic text-ink/80 mb-4">
-                        "La calidad de la libreta superó mis expectativas. ¡Perfecta para acuarelas! El envío fue rápido y el empaque muy cuidado."
-                    </blockquote>
-                    <p class="font-semibold text-sm">— Sofía R.</p>
-                    <div class="text-yellow-500 text-xs mt-1"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-artesanal border-l-4 border-olive">
-                    <blockquote class="italic text-ink/80 mb-4">
-                        "La novela gráfica es una obra de arte. El diseño es único y la atención al cliente, impecable."
-                    </blockquote>
-                    <p class="font-semibold text-sm">— Lucas M.</p>
-                    <div class="text-yellow-500 text-xs mt-1"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-artesanal border-l-4 border-ink">
-                    <blockquote class="italic text-ink/80 mb-4">
-                        "Encontré los útiles gráficos que necesitaba y la consulta por WhatsApp fue súper ágil. ¡Recomendado!"
-                    </blockquote>
-                    <p class="font-semibold text-sm">— Valeria P.</p>
-                    <div class="text-yellow-500 text-xs mt-1"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="admin" class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-            <h2 class="text-3xl font-serif text-ink text-center mb-8">Acceso de Administrador</h2>
-            <div class="bg-white p-8 rounded-xl shadow-xl border-t-4 border-terracotta">
-                <p class="text-center text-ink/70 mb-6">Inicia sesión para acceder al panel de gestión.</p>
-                <form onsubmit="window.location.href='admin.html'; return false;">
-                    <div class="mb-4">
-                        <label for="admin-email" class="block text-sm font-medium text-ink mb-1">Email</label>
-                        <input type="email" id="admin-email" name="admin-email" class="w-full px-4 py-2 border border-olive/30 rounded-lg focus:ring-terracotta focus:border-terracotta" placeholder="admin@lamarencoche.com" required>
-                    </div>
-                    <div class="mb-6">
-                        <label for="admin-password" class="block text-sm font-medium text-ink mb-1">Contraseña</label>
-                        <input type="password" id="admin-password" name="admin-password" class="w-full px-4 py-2 border border-olive/30 rounded-lg focus:ring-terracotta focus:border-terracotta" placeholder="••••••••" required>
-                    </div>
-                    <button type="submit" class="w-full py-3 bg-terracotta text-cream-light font-semibold rounded-full hover:bg-terracotta/90 transition duration-300">
-                        Iniciar Sesión
-                    </button>
-                    <p class="text-center text-xs text-ink/50 mt-4">Solo para uso interno.</p>
-                </form>
-            </div>
-        </section>
-
-    </main>
-    
-    <a href="https://wa.me/5492920256833" target="_blank" class="fixed bottom-6 right-6 z-50 p-4 bg-green-500 text-white rounded-full shadow-lg transition-transform duration-300 hover:scale-110" aria-label="WhatsApp Contacto">
-        <i class="fab fa-whatsapp text-3xl"></i>
-    </a>
-    
-    <footer id="contacto" class="bg-ink text-cream-light py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="font-serif text-2xl mb-4">La Mar en Coche – arte, libros y diseño gráfico.</p>
-            <div class="flex justify-center space-x-6 text-2xl mb-6">
-                <a href="#" target="_blank" class="hover:text-terracota transition duration-300" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://wa.me/5492920256833" target="_blank" class="hover:text-terracota transition duration-300" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                <a href="mailto:contacto@lamarencoche.com" class="hover:text-terracota transition duration-300" aria-label="Correo Electrónico"><i class="fas fa-envelope"></i></a>
-            </div>
-            <p class="text-sm text-cream-light/70">&copy; 2025 La Mar en Coche. Todos los derechos reservados. <a href="admin.html" class="underline hover:text-white">Admin</a></p>
-        </div>
-    </footer>
-
-    <div id="cart-modal" class="fixed inset-0 z-[60] bg-ink/50 backdrop-blur-sm hidden" onclick="toggleCartModal(event)">
-        <div class="bg-cream-light w-full max-w-md mx-auto mt-16 p-6 rounded-lg shadow-2xl animate-slideDown" onclick="event.stopPropagation()">
-            <h3 class="text-2xl font-serif text-ink mb-4 border-b pb-2">Tu Cesta</h3>
-            <div id="cart-items-list" class="space-y-3 max-h-80 overflow-y-auto mb-4">
-                <p id="empty-cart-message" class="text-ink/60">Tu cesta está vacía. ¡Añade algo!</p>
-            </div>
-            <div class="border-t pt-4">
-                <a id="checkout-whatsapp" href="#" target="_blank" class="block w-full text-center px-4 py-3 bg-olive text-cream-light font-semibold rounded-full shadow-lg hover:bg-olive/90 transition duration-300 opacity-50 pointer-events-none" onclick="generateWhatsappMessage(event)">
-                    Consultar por Cesta Completa <i class="fab fa-whatsapp ml-2"></i>
-                </a>
-            </div>
-        </div>
+    <!-- MENU MÓVIL -->
+    <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 border-t border-olive/20 text-lg">
+      <a href="#inicio" class="block py-2 hover:text-olive">Inicio</a>
+      <a href="#productos" class="block py-2 hover:text-olive">Productos</a>
+      <a href="#contacto" class="block py-2 hover:text-olive">Contacto</a>
+      <a href="admin.html" class="block py-2 text-terracotta font-semibold hover:text-ink">Admin</a>
     </div>
-    
-    <div id="toast-notification" class="fixed bottom-20 right-6 z-50 p-4 bg-olive text-cream-light rounded-lg shadow-xl hidden transition-all duration-300">
-        <p class="font-semibold flex items-center"><i class="fas fa-check-circle mr-2"></i> <span id="toast-message"></span></p>
+  </header>
+
+  <!-- HERO -->
+  <section id="inicio" class="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-36 min-h-[60vh]">
+    <div class="absolute inset-0 opacity-70" style="background-color:#D7E692; background-image:radial-gradient(circle,#D7E692 1px,transparent 1px),radial-gradient(circle,#D7E692 1px,#FFF8F0 1px); background-size:2px 2px; background-position:0 0,1px 1px;">
+      <div class="absolute inset-0 bg-gradient-to-t from-cream-light/80 to-transparent"></div>
     </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="font-serif text-6xl sm:text-7xl lg:text-8xl font-light text-ink leading-tight mb-4">
+        Explorá la belleza de lo hecho a mano.
+      </h1>
+      <p class="text-xl sm:text-2xl text-ink/80 max-w-2xl mx-auto mb-8">
+        Libros, objetos y arte gráfico con alma, para inspirar tu creatividad.
+      </p>
+      <a href="#productos" class="inline-block px-8 py-3 bg-olive text-cream-light text-lg font-semibold rounded-full shadow-lg hover:bg-olive/90 transition transform hover:scale-105">
+        Ver Catálogo <i class="fas fa-arrow-down ml-2"></i>
+      </a>
+    </div>
+  </section>
 
-    <script>
-        const WHATSAPP_NUMBER = '5492920256833';
-        let cart = JSON.parse(localStorage.getItem('lamarencoche_cart')) || {};
+  <!-- CATÁLOGO -->
+  <section id="productos" class="bg-olive/5 max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <h2 class="text-3xl font-serif text-ink text-center mb-12">Selección Destacada</h2>
 
-        function showToast(message) {
-            const toast = document.getElementById('toast-notification');
-            document.getElementById('toast-message').textContent = message;
-            
-            // Mostrar y aplicar animación
-            toast.classList.remove('hidden');
-            toast.classList.add('toast-show');
-            
-            // Ocultar después de 3 segundos
-            setTimeout(() => {
-                toast.classList.remove('toast-show');
-                // Añadir un pequeño retraso para la transición de salida
-                setTimeout(() => {
-                    toast.classList.add('hidden');
-                }, 500); 
-            }, 3000);
-        }
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="product-card bg-white p-6 rounded-xl shadow-artesanal flex flex-col transition hover:shadow-xl">
+        <div class="h-56 bg-terracotta/10 flex items-center justify-center rounded-lg mb-4">
+          <span class="text-terracotta/60">[Imagen Producto]</span>
+        </div>
+        <h3 class="text-2xl font-serif mb-2">Libreta Acuarelas Pro</h3>
+        <p class="text-sm text-ink/70 mb-4 flex-grow">Papel 300gr, 100% algodón. Ideal para técnicas húmedas.</p>
+        <div class="flex flex-col sm:flex-row justify-between gap-2">
+          <button onclick="addToCart('Libreta Acuarelas Pro','P001')" class="bg-olive text-cream-light px-4 py-2 rounded-full text-sm font-semibold hover:bg-olive/90 transition">
+            <i class="fas fa-cart-plus mr-1"></i> Añadir
+          </button>
+          <a href="https://wa.me/5492920256833?text=Hola,%20me%20interesa%20Libreta%20Acuarelas%20Pro" target="_blank" class="border border-olive text-olive px-4 py-2 rounded-full text-sm font-semibold hover:bg-olive hover:text-white transition">
+            Consultar WA
+          </a>
+        </div>
+      </div>
 
-        function saveCart() {
-            localStorage.setItem('lamarencoche_cart', JSON.stringify(cart));
-            updateCartUI();
-        }
+      <div class="product-card bg-white p-6 rounded-xl shadow-artesanal flex flex-col transition hover:shadow-xl">
+        <div class="h-56 bg-ink/10 flex items-center justify-center rounded-lg mb-4">
+          <span class="text-ink/60">[Imagen Producto]</span>
+        </div>
+        <h3 class="text-2xl font-serif mb-2">Kit de Tintas Chinas</h3>
+        <p class="text-sm text-ink/70 mb-4 flex-grow">Set de 6 colores vibrantes para caligrafía e ilustración.</p>
+        <div class="flex flex-col sm:flex-row justify-between gap-2">
+          <button onclick="addToCart('Kit de Tintas Chinas','P002')" class="bg-olive text-cream-light px-4 py-2 rounded-full text-sm font-semibold hover:bg-olive/90 transition">
+            <i class="fas fa-cart-plus mr-1"></i> Añadir
+          </button>
+          <a href="https://wa.me/5492920256833?text=Hola,%20me%20interesa%20Kit%20de%20Tintas%20Chinas" target="_blank" class="border border-olive text-olive px-4 py-2 rounded-full text-sm font-semibold hover:bg-olive hover:text-white transition">
+            Consultar WA
+          </a>
+        </div>
+      </div>
 
-        function addToCart(name, id) {
-            cart[id] = { name: name, quantity: (cart[id] ? cart[id].quantity + 1 : 1) };
-            saveCart();
-            showToast(`¡"${name}" añadido a la cesta!`); // Usa el nuevo Toast
-        }
+      <div class="product-card bg-white p-6 rounded-xl shadow-artesanal flex flex-col transition hover:shadow-xl">
+        <div class="h-56 bg-olive/10 flex items-center justify-center rounded-lg mb-4">
+          <span class="text-olive/60">[Imagen Producto]</span>
+        </div>
+        <h3 class="text-2xl font-serif mb-2">Novela Gráfica "El Viaje"</h3>
+        <p class="text-sm text-ink/70 mb-4 flex-grow">Edición de lujo, tapa dura. Una aventura introspectiva ilustrada.</p>
+        <div class="flex flex-col sm:flex-row justify-between gap-2">
+          <button onclick="addToCart('Novela Gráfica El Viaje','P003')" class="bg-olive text-cream-light px-4 py-2 rounded-full text-sm font-semibold hover:bg-olive/90 transition">
+            <i class="fas fa-cart-plus mr-1"></i> Añadir
+          </button>
+          <a href="https://wa.me/5492920256833?text=Hola,%20me%20interesa%20Novela%20Gráfica%20El%20Viaje" target="_blank" class="border border-olive text-olive px-4 py-2 rounded-full text-sm font-semibold hover:bg-olive hover:text-white transition">
+            Consultar WA
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        function updateCartUI() {
-            const count = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cart-count').textContent = count;
-            
-            const list = document.getElementById('cart-items-list');
-            list.innerHTML = '';
-            
-            if (count === 0) {
-                list.innerHTML = '<p id="empty-cart-message" class="text-ink/60">Tu cesta está vacía. ¡Añade algo!</p>';
-                document.getElementById('checkout-whatsapp').classList.add('opacity-50', 'pointer-events-none');
-            } else {
-                document.getElementById('checkout-whatsapp').classList.remove('opacity-50', 'pointer-events-none');
-                
-                Object.entries(cart).forEach(([id, item]) => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'flex justify-between items-center text-ink font-sans border-b border-olive/20 pb-2';
-                    itemDiv.innerHTML = `
-                        <span>${item.quantity} x ${item.name}</span>
-                        <button onclick="removeFromCart('${id}')" class="text-terracotta hover:text-ink transition duration-200 ml-4 p-1">
-                            <i class="fas fa-trash-alt text-sm"></i>
-                        </button>
-                    `;
-                    list.appendChild(itemDiv);
-                });
-            }
-        }
+  <!-- CONTACTO + MAPA -->
+  <section id="contacto" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <h2 class="text-3xl font-serif text-ink text-center mb-4">Contáctanos</h2>
+    <p class="text-center text-ink/70 mb-12">Estamos aquí para responder tus preguntas y ayudarte con tus pedidos.</p>
 
-        function removeFromCart(id) {
-            delete cart[id];
-            saveCart();
-            updateCartUI();
-        }
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <div class="space-y-6">
+        <div>
+          <p class="text-lg font-semibold"><i class="fas fa-envelope text-olive mr-2"></i> Correo electrónico</p>
+          <p class="text-ink/80">contacto@lamarencoche.com</p>
+        </div>
+        <div>
+          <p class="text-lg font-semibold"><i class="fas fa-phone text-olive mr-2"></i> Teléfono</p>
+          <p class="text-ink/80">+54 9 2920 256833</p>
+        </div>
+        <div>
+          <p class="text-lg font-semibold"><i class="fas fa-map-marker-alt text-olive mr-2"></i> Ubicación</p>
+          <p class="text-ink/80">Suipacha 559, B8504 Carmen de Patagones, Buenos Aires</p>
+        </div>
+        <div>
+          <p class="text-lg font-semibold mb-2"><i class="fas fa-clock text-olive mr-2"></i> Horario</p>
+          <ul class="text-ink/80 space-y-1 text-sm">
+            <li>Lunes a Viernes 8:30 a.m.–12:30 p.m., 4:30–8:30 p.m.</li>
+            <li>sábado, 9 a.m.–12:30 p.m.</li>
+            <li>Domingo: Cerrado</li>
+          </ul>
+        </div>
+        <div class="flex space-x-4 text-2xl pt-4">
+          <a href="#" class="hover:text-terracotta"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/5492920256833" class="hover:text-green-500"><i class="fab fa-whatsapp"></i></a>
+          <a href="mailto:contacto@lamarencoche.com" class="hover:text-olive"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
 
-        function generateWhatsappMessage(event) {
-            let message = "Hola! Quiero consultar por los siguientes productos de mi cesta:\n\n";
-            let productList = Object.values(cart).map(item => `- ${item.quantity} x ${item.name}`).join('\n');
-            
-            message += productList;
-            message += "\n\nMuchas gracias!";
-            
-            const encodedMessage = encodeURIComponent(message);
-            const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
-            
-            event.currentTarget.href = waLink;
-        }
+      <div class="shadow-lg rounded-xl overflow-hidden border border-olive/20">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6040.959247812329!2d-62.99391491915499!3d-40.79545304852694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95f6a2980bc764c7%3A0x7c38f15cd37c1d7f!2sLa%20Mar%20En%20Coche!5e0!3m2!1ses-419!2sar!4v1762946736515!5m2!1ses-419!2sar"
+          width="100%" height="450" style="border:0;" allowfullscreen loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
 
-        function toggleCartModal(event) {
-            const modal = document.getElementById('cart-modal');
-            if (modal.classList.contains('hidden')) {
-                updateCartUI();
-                modal.classList.remove('hidden');
-            } else if (event === undefined || event.target.id === 'cart-modal') {
-                modal.classList.add('hidden');
-            }
-        }
+  <!-- FOOTER -->
+  <footer class="bg-ink text-cream-light py-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="font-serif text-2xl mb-4">La Mar en Coche – arte, libros y diseño gráfico.</p>
+      <p class="text-sm text-cream-light/70">&copy; 2025 La Mar en Coche. Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
-        function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-            const icon = document.getElementById('mobile-menu-icon');
-            if (icon.classList.contains('fa-bars')) {
-                icon.classList.replace('fa-bars', 'fa-times');
-            } else {
-                icon.classList.replace('fa-times', 'fa-bars');
-            }
-        }
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/5492920256833" target="_blank" class="fixed bottom-6 right-6 z-50 p-4 bg-green-500 text-white rounded-full shadow-lg hover:scale-110 transition-transform" aria-label="WhatsApp Contacto">
+    <i class="fab fa-whatsapp text-3xl"></i>
+  </a>
 
-        document.addEventListener('DOMContentLoaded', updateCartUI);
-    </script>
+  <!-- MODAL CARRITO -->
+  <div id="cart-modal" class="fixed inset-0 z-[60] bg-ink/50 backdrop-blur-sm hidden" onclick="toggleCartModal(event)">
+    <div class="bg-cream-light w-full max-w-md mx-auto mt-16 p-6 rounded-lg shadow-2xl" onclick="event.stopPropagation()">
+      <h3 class="text-2xl font-serif mb-4 border-b pb-2">Tu Cesta</h3>
+      <div id="cart-items-list" class="space-y-3 max-h-80 overflow-y-auto mb-4">
+        <p id="empty-cart-message" class="text-ink/60">Tu cesta está vacía. ¡Añade algo!</p>
+      </div>
+      <div class="border-t pt-4">
+        <a id="checkout-whatsapp" href="#" target="_blank" class="block w-full text-center px-4 py-3 bg-olive text-white font-semibold rounded-full shadow-lg hover:bg-olive/90 transition opacity-50 pointer-events-none" onclick="generateWhatsappMessage(event)">
+          Consultar por Cesta Completa <i class="fab fa-whatsapp ml-2"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast-notification" class="fixed bottom-20 right-6 z-50 p-4 bg-olive text-cream-light rounded-lg shadow-xl hidden transition-all duration-300">
+    <p class="font-semibold flex items-center"><i class="fas fa-check-circle mr-2"></i> <span id="toast-message"></span></p>
+  </div>
+
+  <script>
+    const WHATSAPP_NUMBER = '5492920256833';
+    let cart = JSON.parse(localStorage.getItem('lamarencoche_cart')) || {};
+
+    function showToast(message) {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-message').textContent = message;
+      toast.classList.remove('hidden');
+      toast.classList.add('toast-show');
+      setTimeout(() => { toast.classList.add('hidden'); }, 3000);
+    }
+
+    function saveCart() {
+      localStorage.setItem('lamarencoche_cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function addToCart(name, id) {
+      cart[id] = { name, quantity: (cart[id] ? cart[id].quantity + 1 : 1) };
+      saveCart();
+      showToast(`¡"${name}" añadido a la cesta!`);
+    }
+
+    function updateCartUI() {
+      const count = Object.values(cart).reduce((s, i) => s + i.quantity, 0);
+      document.getElementById('cart-count').textContent = count;
+      const list = document.getElementById('cart-items-list');
+      list.innerHTML = '';
+      if (count === 0) {
+        list.innerHTML = '<p id="empty-cart-message" class="text-ink/60">Tu cesta está vacía. ¡Añade algo!</p>';
+        document.getElementById('checkout-whatsapp').classList.add('opacity-50', 'pointer-events-none');
+      } else {
+        document.getElementById('checkout-whatsapp').classList.remove('opacity-50', 'pointer-events-none');
+        Object.entries(cart).forEach(([id, item]) => {
+          const el = document.createElement('div');
+          el.className = 'flex justify-between items-center text-ink border-b border-olive/20 pb-2';
+          el.innerHTML = `<span>${item.quantity} × ${item.name}</span>
+          <button onclick="removeFromCart('${id}')" class="text-terracotta hover:text-ink transition p-1"><i class="fas fa-trash-alt text-sm"></i></button>`;
+          list.appendChild(el);
+        });
+      }
+    }
+
+    function removeFromCart(id) {
+      delete cart[id];
+      saveCart();
+    }
+
+    function generateWhatsappMessage(event) {
+      let message = "Hola! Quiero consultar por los siguientes productos:\n\n";
+      let list = Object.values(cart).map(i => `- ${i.quantity} × ${i.name}`).join('\n');
+      const link = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message + list + "\n\n¡Gracias!")}`;
+      event.currentTarget.href = link;
+    }
+
+    function toggleCartModal(event) {
+      const modal = document.getElementById('cart-modal');
+      if (modal.classList.contains('hidden')) {
+        updateCartUI();
+        modal.classList.remove('hidden');
+      } else if (!event || event.target.id === 'cart-modal') {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+      const icon = document.getElementById('mobile-menu-icon');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    }
+
+    document.addEventListener('DOMContentLoaded', updateCartUI);
+  </script>
 </body>
 </html>
